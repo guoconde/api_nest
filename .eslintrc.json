@@ -1,61 +1,6 @@
 {
-  "extends": [
-    "airbnb-base",
-    "airbnb-typescript/base",
-    "plugin:@typescript-eslint/recommended-type-checked",
-    "plugin:@typescript-eslint/stylistic-type-checked",
-    "plugin:prettier/recommended"
-  ],
-  "plugins": ["eslint-plugin-import-helpers"],
-  "parserOptions": {
-    "project": "./tsconfig.json"
-  },
+  "extends": "@rocketseat/eslint-config/node",
   "rules": {
-    "camelcase": "error",
-    "import/no-unresolved": "error",
-    "class-methods-use-this": "off",
-    "import/prefer-default-export": "off",
-    "@typescript-eslint/unbound-method": "off",
-    "@typescript-eslint/explicit-function-return-type": ["error"],
-    "@typescript-eslint/no-floating-promises": ["error"],
-    "@typescript-eslint/no-misused-promises": [
-      "error",
-      { "checksVoidReturn": false }
-    ],
-    "@typescript-eslint/no-namespace": "off",
-    "@typescript-eslint/no-unused-vars": [
-      "error",
-      {
-        "argsIgnorePattern": "^_"
-      }
-    ],
-    "import-helpers/order-imports": [
-      "warn",
-      {
-        "newlinesBetween": "always",
-        "groups": [
-          ["/^express$/"],
-          "module",
-          "/^@/controllers/",
-          "/^@/middlewares/",
-          "/^@/validations/",
-          "/^@/contracts/",
-          "/^@/use-cases/",
-          "/^@/services/",
-          "/^@/repositories/",
-          "/^@/dtos/",
-          "/^@/errors/",
-          "/^@/utils/",
-          "/^@/*/",
-          ["parent", "sibling", "index"]
-        ],
-        "alphabetize": { "order": "asc", "ignoreCase": true }
-      }
-    ]
-  },
-  "settings": {
-    "import/resolver": {
-      "typescript": {}
-    }
+    "no-useless-constructor": "off"
   }
 }
