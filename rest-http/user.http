@@ -1,0 +1,49 @@
+@baseUrl = http://localhost:3333
+@authToken = {{user_authenticate.response.body.access_token}}
+
+"rest-client.environmentVariables": {
+  $shared: {
+    "baseUrl": {{baseUrl}}, 
+    "authToken": {{authToken}}
+  },
+}
+
+# @name create_account
+POST {{baseUrl}}/accounts
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "g4@g.com",
+  "password": "123456"
+}
+
+###
+# @name user_authenticate
+POST {{baseUrl}}/sessions
+Content-Type: application/json
+
+{
+  "email": "g4@g.com",
+  "password": "123456"
+}
+
+###
+
+# @name create_question
+POST {{baseUrl}}/questions
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "title": "Qual a melhor linguagem de programação 32?",
+  "content": "Estou estudando programação e gostaria de saber qual a melhor linguagem de programação para se aprender.",
+  "authorId": "8a4e413c-70e6-4635-ad24-c6747b50e20b"
+}
+
+###
+
+# @name list_questions
+GET {{baseUrl}}/questions?page=1
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
