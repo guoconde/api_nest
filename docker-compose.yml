@@ -1,19 +1,36 @@
-version: '3.8'
-
 services:
   postgres:
-    container_name: nest-clean-pg
-    image: postgres
+    image: postgres:16
+    restart: always
     ports:
-      - 5432:5432
+      - ${POSTGRESQL_PORT}:5432
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: docker
-      POSTGRES_DB: nest-clean
-      PGDATA: /var/lib/postgresql/data/pgdata
+      - POSTGRES_USER=${POSTGRESQL_USERNAME}
+      - POSTGRES_PASSWORD=${POSTGRESQL_PASSWORD}
+      - POSTGRES_DB=${POSTGRESQL_DATABASE}
     volumes:
-      - ./data/pg:/var/lib/postgresql/data
-
+      - postgres:/var/lib/postgresql/data
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1024M
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
+    ports:
+      - 8080:80
+    volumes:
+      - pgadmin:/var/lib/pgadmin
 volumes:
   postgres:
+    driver: local
+  pgadmin:
     driver: local
