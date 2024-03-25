@@ -1,10 +1,9 @@
-import { Body, ConflictException, Controller, Post, UseGuards } from '@nestjs/common';
-import { createSlug } from 'src/utils/create-slug.util';
+import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { z } from 'zod';
 import { JwtAuthGuard } from '@/infra/auth/jwt-auth.guard';
-import { PrismaService } from '@/infra/database/prisma/prisma.service';
 import { CurrentUser } from '@/infra/auth/current-user-decorator';
 import { UserPayload } from '@/infra/auth/jwt.strategy';
+import { CreateQuestionUseCase } from '@/domain/forum/application/use-cases/create-question';
 import { ZodValidationPipe } from '../pipes/zod-validations.pipe';
 
 const createQuestionBodySchema = z.object({
@@ -19,31 +18,18 @@ const validationPipe = new ZodValidationPipe(createQuestionBodySchema);
 @Controller('/questions')
 @UseGuards(JwtAuthGuard)
 export class CreateQuestionController {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly createQuestion: CreateQuestionUseCase) {}
 
   @Post()
   async handle(@Body(validationPipe) body: BodyRequest, @CurrentUser() user: UserPayload) {
     const { title, content } = body;
+    const userId = user.sub;
 
-    const slug = createSlug(title);
-
-    const existingQuestion = await this.prisma.question.findUnique({
-      where: {
-        slug,
-      },
-    });
-
-    if (existingQuestion) {
-      throw new ConflictException('Question already exists');
-    }
-
-    const question = await this.prisma.question.create({
-      data: {
-        title,
-        slug,
-        content,
-        authorId: user.sub,
-      },
+    const question = await this.createQuestion.execute({
+      title,
+      content,
+      authorId: userId,
+      attachmentsIds: [],
     });
 
     return {
