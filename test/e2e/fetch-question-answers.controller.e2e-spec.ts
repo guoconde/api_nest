@@ -4,7 +4,6 @@ import { DatabaseModule } from '@/infra/database/database.module';
 import { INestApplication } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Test } from '@nestjs/testing';
-import { Answer } from '@prisma/client';
 import request from 'supertest';
 import { AnswerFactory } from 'test/factories/make-answer';
 import { QuestionFactory } from 'test/factories/make-question';
@@ -64,7 +63,7 @@ describe('Fetch question answers (E2E)', () => {
       answers: expect.arrayContaining([
         expect.objectContaining({ content: 'First content' }),
         expect.objectContaining({ content: 'Second content' }),
-      ]) as Answer[],
+      ]) as [],
     });
   });
 });

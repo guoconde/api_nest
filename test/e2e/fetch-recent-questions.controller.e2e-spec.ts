@@ -4,7 +4,6 @@ import { DatabaseModule } from '@/infra/database/database.module';
 import { INestApplication } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Test } from '@nestjs/testing';
-import { Question } from '@prisma/client';
 import request from 'supertest';
 import { QuestionFactory } from 'test/factories/make-question';
 import { StudentFactory } from 'test/factories/make-student';
@@ -49,7 +48,7 @@ describe('Fetch recent questions (E2E)', () => {
       questions: expect.arrayContaining([
         expect.objectContaining({ title: 'First question' }),
         expect.objectContaining({ title: 'Second question' }),
-      ]) as Question[],
+      ]) as [],
     });
   });
 });

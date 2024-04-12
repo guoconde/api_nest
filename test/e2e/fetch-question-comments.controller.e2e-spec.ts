@@ -63,7 +63,7 @@ describe('Fetch question comments (E2E)', () => {
       comments: expect.arrayContaining([
         expect.objectContaining({ content: 'First comment', answerId: null }),
         expect.objectContaining({ content: 'Second comment', answerId: null }),
-      ]) as Comment[],
+      ]) as [],
     });
   });
 });
