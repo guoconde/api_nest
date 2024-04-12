@@ -13,6 +13,8 @@ import { FetchQuestionAnswersUseCase } from '@/domain/forum/application/use-case
 import { ChooseQuestionBestAnswerUseCase } from '@/domain/forum/application/use-cases/choose-question-best-answer';
 import { CommentOnQuestionUseCase } from '@/domain/forum/application/use-cases/comment-on-question';
 import { DeleteQuestionCommentUseCase } from '@/domain/forum/application/use-cases/delete-question-comment';
+import { CommentOnAnswerUseCase } from '@/domain/forum/application/use-cases/comment-on-answer';
+import { DeleteAnswerCommentUseCase } from '@/domain/forum/application/use-cases/delete-answer-comment';
 import { AuthenticateController } from './controllers/authenticate.controller';
 import { CreateAccountController } from './controllers/create-account.controller';
 import { CreateQuestionController } from './controllers/create-question.controler';
@@ -29,6 +31,8 @@ import { FetchQuestionAnswersController } from './controllers/fetch-question-ans
 import { ChooseQuestionBestAnswerController } from './controllers/choose-question-best-answer.controller';
 import { CommentOnQuestionController } from './controllers/comment-on-question.controller';
 import { DeleteQuestionCommentController } from './controllers/delete-question-comment.controller';
+import { CommentOnAnswerController } from './controllers/comment-on-answer.controller';
+import { DeleteAnswerCommentController } from './controllers/delete-answer-comment.controller';
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -47,6 +51,8 @@ import { DeleteQuestionCommentController } from './controllers/delete-question-c
     ChooseQuestionBestAnswerController,
     CommentOnQuestionController,
     DeleteQuestionCommentController,
+    CommentOnAnswerController,
+    DeleteAnswerCommentController,
   ],
   providers: [
     CreateQuestionUseCase,
@@ -63,6 +69,8 @@ import { DeleteQuestionCommentController } from './controllers/delete-question-c
     ChooseQuestionBestAnswerUseCase,
     CommentOnQuestionUseCase,
     DeleteQuestionCommentUseCase,
+    CommentOnAnswerUseCase,
+    DeleteAnswerCommentUseCase,
   ],
 })
 export class HttpModule {}
