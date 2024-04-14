@@ -8,8 +8,8 @@ import {
 } from '@nestjs/common';
 import { z } from 'zod';
 import { AuthenticateStudentUseCase } from '@/domain/forum/application/use-cases/authenticate-student';
-import { WrongCredentialsError } from '@/domain/forum/application/use-cases/errors/wrong-credential-error';
 import { Public } from '@/infra/auth/public';
+import { WrongCredentialsError } from '@/domain/forum/application/use-cases/errors/wrong-credential.error';
 import { ZodValidationPipe } from '../pipes/zod-validations.pipe';
 
 const authenticateBodySchema = z.object({

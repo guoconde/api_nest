@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { StudentsRepository } from '../repositories/students-repository';
 import { HashComparer } from '../cryptography/hash-comparer';
 import { Encrypter } from '../cryptography/encrypter';
-import { WrongCredentialsError } from './errors/wrong-credential-error';
+import { WrongCredentialsError } from './errors/wrong-credential.error';
 
 interface AuthenticateStudentUseCaseRequest {
   email: string;
