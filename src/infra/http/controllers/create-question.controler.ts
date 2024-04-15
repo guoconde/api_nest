@@ -8,6 +8,7 @@ import { ZodValidationPipe } from '../pipes/zod-validations.pipe';
 const createQuestionBodySchema = z.object({
   title: z.string(),
   content: z.string(),
+  attachments: z.array(z.string().uuid()),
 });
 
 type BodyRequest = z.infer<typeof createQuestionBodySchema>;
@@ -20,14 +21,14 @@ export class CreateQuestionController {
 
   @Post()
   async handle(@Body(validationPipe) body: BodyRequest, @CurrentUser() user: UserPayload) {
-    const { title, content } = body;
+    const { title, content, attachments } = body;
     const userId = user.sub;
 
     const result = await this.createQuestion.execute({
       title,
       content,
       authorId: userId,
-      attachmentsIds: [],
+      attachmentsIds: attachments,
     });
 
     if (result.isLeft()) {

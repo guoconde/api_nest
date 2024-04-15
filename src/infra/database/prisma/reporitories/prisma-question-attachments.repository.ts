@@ -8,14 +8,6 @@ import { PrismaQuestionAttachmentMapper } from '../mappers/prisma-question-attac
 export class PrismaQuestionAttachmentsRepository implements QuestionAttachmentsRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  createMany(attachments: QuestionAttachment[]): Promise<void> {
-    throw new Error('Method not implemented.');
-  }
-
-  deleteMany(attachments: QuestionAttachment[]): Promise<void> {
-    throw new Error('Method not implemented.');
-  }
-
   async findManyByQuestionId(questionId: string): Promise<QuestionAttachment[]> {
     const questionAttachments = await this.prisma.attachment.findMany({
       where: {
@@ -24,6 +16,34 @@ export class PrismaQuestionAttachmentsRepository implements QuestionAttachmentsR
     });
 
     return questionAttachments.map(PrismaQuestionAttachmentMapper.toDomain);
+  }
+
+  async createMany(attachments: QuestionAttachment[]): Promise<void> {
+    if (attachments.length === 0) {
+      return;
+    }
+
+    const data = PrismaQuestionAttachmentMapper.toPrismaUpdateMany(attachments);
+
+    await this.prisma.attachment.updateMany(data);
+  }
+
+  async deleteMany(attachments: QuestionAttachment[]): Promise<void> {
+    if (attachments.length === 0) {
+      return;
+    }
+
+    const attachmentIds = attachments.map(attachment => {
+      return attachment.id.toString();
+    });
+
+    await this.prisma.attachment.deleteMany({
+      where: {
+        id: {
+          in: attachmentIds,
+        },
+      },
+    });
   }
 
   async deleteManyByQuestionId(questionId: string): Promise<void> {
