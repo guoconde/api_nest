@@ -8,6 +8,14 @@ import { PrismaQuestionAttachmentMapper } from '../mappers/prisma-question-attac
 export class PrismaQuestionAttachmentsRepository implements QuestionAttachmentsRepository {
   constructor(private readonly prisma: PrismaService) {}
 
+  createMany(attachments: QuestionAttachment[]): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
+
+  deleteMany(attachments: QuestionAttachment[]): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
+
   async findManyByQuestionId(questionId: string): Promise<QuestionAttachment[]> {
     const questionAttachments = await this.prisma.attachment.findMany({
       where: {
