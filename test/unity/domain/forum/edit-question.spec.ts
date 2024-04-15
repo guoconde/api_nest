@@ -5,16 +5,24 @@ import { NotAllowedError } from '@/core/errors/errors/not-allowed-error';
 import { InMemoryQuestionAttachmentsRepository } from 'test/repositories/in-memory-question-attachments-repository';
 import { makeQuestionAttachment } from 'test/factories/make-question-attachments';
 import { EditQuestionUseCase } from '@/domain/forum/application/use-cases/edit-question';
+import { InMemoryAttachmentsRepository } from 'test/repositories/in-memory-attachments-repository';
+import { InMemoryStudentsRepository } from 'test/repositories/in-memory-students-repository';
 
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository;
 let inMemoryQuestionAttachmentsRepository: InMemoryQuestionAttachmentsRepository;
+let inMemoryStudentsRepository: InMemoryStudentsRepository;
+let inMemoryAttachmentsRepository: InMemoryAttachmentsRepository;
 let sut: EditQuestionUseCase;
 
 describe('Edit Question', () => {
   beforeEach(() => {
     inMemoryQuestionAttachmentsRepository = new InMemoryQuestionAttachmentsRepository();
+    inMemoryAttachmentsRepository = new InMemoryAttachmentsRepository();
+    inMemoryStudentsRepository = new InMemoryStudentsRepository();
     inMemoryQuestionsRepository = new InMemoryQuestionsRepository(
       inMemoryQuestionAttachmentsRepository,
+      inMemoryAttachmentsRepository,
+      inMemoryStudentsRepository,
     );
 
     sut = new EditQuestionUseCase(
