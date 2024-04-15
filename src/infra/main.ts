@@ -10,6 +10,7 @@ async function bootstrap() {
   const envService = app.get(EnvService);
   const port = envService.get('PORT');
 
+  // eslint-disable-next-line no-console
   await app.listen(port, () => console.log(`Server is running on port ${port}`));
 }
 bootstrap();
