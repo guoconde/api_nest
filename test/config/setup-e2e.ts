@@ -39,7 +39,7 @@ beforeAll(async () => {
 
   const databaseURL = generateUniqueDatabaseURL(schemaId);
 
-  env.DATABASE_URL = databaseURL;
+  process.env.DATABASE_URL = databaseURL;
 
   DomainEvents.shouldRun = false;
 
