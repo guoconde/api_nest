@@ -29,6 +29,12 @@ services:
       - 8080:80
     volumes:
       - pgadmin:/var/lib/pgadmin
+  cache:
+    image: redis
+    ports:
+      - 6379:6379
+    volumes:
+      - ./data/redis:/data
 volumes:
   postgres:
     driver: local
