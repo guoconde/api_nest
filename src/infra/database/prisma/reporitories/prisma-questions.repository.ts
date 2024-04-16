@@ -4,6 +4,7 @@ import { Question } from '@/domain/forum/enterprise/entities/question';
 import { Injectable } from '@nestjs/common';
 import { QuestionAttachmentsRepository } from '@/domain/forum/application/repositories/question-attachments-repository';
 import { QuestionDetails } from '@/domain/forum/enterprise/entities/value-objects/question-details';
+import { DomainEvents } from '@/core/events/domain-events';
 import { PrismaService } from '../prisma.service';
 import { PrismaQuestionMapper } from '../mappers/prisma-question.mapper';
 import { PrismaQuestionDetailsMapper } from '../mappers/prisma-question-details-mapper';
@@ -81,6 +82,8 @@ export class PrismaQuestionsRepository implements QuestionsRepository {
     });
 
     await this.questionAttachmentsRepository.createMany(question.attachments.getItems());
+
+    DomainEvents.dispatchEventsForAggregate(question.id);
   }
 
   async save(question: Question): Promise<void> {
@@ -96,6 +99,8 @@ export class PrismaQuestionsRepository implements QuestionsRepository {
       this.questionAttachmentsRepository.createMany(question.attachments.getNewItems()),
       this.questionAttachmentsRepository.deleteMany(question.attachments.getRemovedItems()),
     ]);
+
+    DomainEvents.dispatchEventsForAggregate(question.id);
   }
 
   async delete(question: Question): Promise<void> {
